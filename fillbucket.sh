@@ -7,7 +7,8 @@ set -o nounset
 trap "echo 'Missing parameter'; exit 1" INT TERM EXIT
 username="$1"
 password="$2"
-reponame="$3"
+company="$3"
+reponame="$4"
 #remote="$4"
 trap - INT TERM EXIT
 
@@ -24,10 +25,10 @@ curl --fail "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/user" > /dev/null |
 
 reponame=$(echo $reponame | tr '[:upper:]' '[:lower:]')
 
-echo "Checking if BitBucket repository \"$username/$reponame\" exists..."
-curl "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/repositories/$username/$reponame" | grep "error" > /dev/null && (
-    echo "BitBucket repository \"$username/$reponame\" does NOT exist, creating it..."
-    curl -X POST --fail "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/repositories/$username/$reponame" -H "Content-Type: application/json" -d '{"scm": "git", "is_private": "true"}' > /dev/null
+echo "Checking if BitBucket repository \"$company/$reponame\" exists..."
+curl "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/repositories/$company/$reponame" | grep "error" > /dev/null && (
+    echo "BitBucket repository \"$company/$reponame\" does NOT exist, creating it..."
+    curl -X POST --fail "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/repositories/$company/$reponame" -H "Content-Type: application/json" -d '{"scm": "git", "is_private": "true"}' > /dev/null
 )
 
 
@@ -41,4 +42,4 @@ curl "${CURL_OPTS[@]}" "https://api.bitbucket.org/2.0/repositories/$username/$re
 
 
 echo "Pushing to remote..."
-git push https://"$username:$password"@bitbucket.org/$username/$reponame.git --all --force
+git push https://"$username:$password"@bitbucket.org/$company/$reponame.git --all --force

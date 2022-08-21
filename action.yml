@@ -9,6 +9,9 @@ inputs:
     default: ${{ github.actor }}
   password:
     required: true
+  company:
+    required: true
+    default: ${{ github.actor }}
   repository:
     required: true
     default: ${{ github.event.repository.name }}
@@ -19,4 +22,5 @@ runs:
   args:
     - ${{ inputs.username }}
     - ${{ inputs.password }}
+    - ${{ inputs.company }}
     - ${{ inputs.repository }}
