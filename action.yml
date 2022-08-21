@@ -17,7 +17,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/heussd/mirror-to-bitbucket-github-action:latest'
+  image: 'docker://anurudda7/mirror-to-bitbucket:latest'
   args:
     - ${{ inputs.username }}
     - ${{ inputs.password }}
